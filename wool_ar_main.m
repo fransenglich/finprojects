@@ -20,12 +20,10 @@ len = length(prices);
 % Our AR(2) data.
 ar2 = 0;
 
-for i = 1:len
+% We let the first value be 0.
+for i = 2:len
     contr = ar_contribution(prices, i);
-
-    if i ~= len % Matlab's !=
-        ar2 = [ar2, contr];
-    end
+    ar2 = [ar2, contr];
 end
 
 plot(times, ar2);
