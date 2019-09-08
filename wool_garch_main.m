@@ -1,35 +1,81 @@
+clear all;
+close all;
+
+%% Initialize data.
+data = readtable("wool.xlsx");
+
+times = data{:, 1};
+prices = data{:, 2};
+
+len = length(prices);
+simu_len = 3 * 250;
+
+%% True test data parameters
+s2 = 0.3^2 / 250; % unconditional daily variance.
+alpha = 0.25;
+beta = 0.35;
+w = s2 * (1 - alpha - beta);
+
+%% Simulate test data
+e = randn(simu_len, 1);
+[simulated, simu_sigma2] = deal(NaN(simu_len, 1));
+simu_sigma2(1) = s2;
+simulated(1) = sqrt(simu_sigma2(1)) * e(1);
+for t = 2:simu_len
+    simu_sigma2(t) = w + alpha * simulated(t - 1)^2 + beta * simu_sigma2(t - 1);
+    simulated(t) = sqrt(simu_sigma2(t)) * e(t);
+end
 
 %% ML estimation: 
-% our task is to estimate (as good as possible) the "unknown" parameters
-% s2, alpha, beta, only using the time series r:
 
 % initial guess:
-alpha0 = 0.5;
-beta0  = 0.5;
-theta0 = [alpha0; beta0];
+simu_alpha0 = 0.5;
+simu_beta0 = 0.5;
+simu_theta0 = [simu_alpha0; simu_beta0];
 
-fun = @(x)-loglf(x, prices);
-thetaHat = fmincon(fun,theta0,[],[],[],[],[0;0],[1;1]);
-
-% estimated parameters:
-alphaHat = thetaHat(1);
-betaHat  = thetaHat(2);
+simu_fun = @(x)-log_likelihood(x, simulated);
+simu_thetaHat = fmincon(simu_fun, simu_theta0, [], [], [], [], [0;0], [1;1]);
 
 % the corresponding estimated sigma2:
-[~,sigma2Hat] = loglf(thetaHat, prices);
+[~, simu_sigma2Hat] = log_likelihood(simu_thetaHat, simulated);
 
 % plot the result
 figure
 
-subplot(2, 1, 1)
-plot(exp(cumsum(prices)))
-title('Daily prices','Interpreter','latex')
+%% Basic view of our data to aid intuition
+subplot(3, 1, 1)
 
-subplot(2,1,2)
-plot(sqrt(250)*sqrt(sigma2))
-hold on
-plot(sqrt(250)*sqrt(sigma2Hat),'r')
-%legend({sprintf('True $(\\alpha,\\beta) = (%3.2f,%3.2f)$',alpha,beta),...
-%        sprintf('Estimated $(\\hat{\\alpha},\\hat{\\beta}) = (%3.2f,%3.2f)$',alphaHat,betaHat)},'Interpreter','latex');
+plot(times, prices);
+title("Wool prices, plain time series.");
 
-%title('Ann. conditional daily std ($\sigma(t)\sqrt{250}$)','Interpreter','latex')
+
+%% Let's plot our computed and simulated variance
+subplot(3, 1, 2)
+
+% The real variance, we computed it.
+plot(sqrt(250)*sqrt(simu_sigma2), 'g');
+
+hold on;
+plot(sqrt(250)*sqrt(simu_sigma2Hat),'r');
+title("GARCH on simulated data.");
+
+plot(simulated);
+
+legend("Real std. dev.", "Std. dev. from GARCH(1, 1)", "Time series");
+
+hold off;
+
+%% Let's now run on the actual wool prices
+alpha0 = 0.5;
+beta0  = 0.5;
+theta0 = [alpha0; beta0];
+
+fun = @(x)-log_likelihood(x, prices);
+thetaHat = fmincon(fun, theta0, [], [], [], [], [0;0], [1;1]);
+
+[~, sigma2Hat] = log_likelihood(thetaHat, prices);
+
+subplot(3, 1, 3)
+
+plot(times, sqrt(sigma2Hat));
+title("GARCH(1, 1) std. dev. of wool data.");
