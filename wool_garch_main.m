@@ -33,11 +33,11 @@ simu_alpha0 = 0.5;
 simu_beta0 = 0.5;
 simu_theta0 = [simu_alpha0; simu_beta0];
 
-simu_fun = @(x)-log_likelihood(x, simulated);
+simu_fun = @(x)-loglf(x, simulated);
 simu_thetaHat = fmincon(simu_fun, simu_theta0, [], [], [], [], [0;0], [1;1]);
 
 % the corresponding estimated sigma2:
-[~, simu_sigma2Hat] = log_likelihood(simu_thetaHat, simulated);
+[~, simu_sigma2Hat] = loglf(simu_thetaHat, simulated);
 
 % plot the result
 figure
@@ -70,10 +70,10 @@ alpha0 = 0.5;
 beta0  = 0.5;
 theta0 = [alpha0; beta0];
 
-fun = @(x)-log_likelihood(x, prices);
+fun = @(x)-loglf(x, prices);
 thetaHat = fmincon(fun, theta0, [], [], [], [], [0;0], [1;1]);
 
-[~, sigma2Hat] = log_likelihood(thetaHat, prices);
+[~, sigma2Hat] = loglf(thetaHat, prices);
 
 subplot(3, 1, 3)
 
