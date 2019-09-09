@@ -37,17 +37,19 @@ plot(times, exc_ar2);
 %% Now, let's do the regression using Matlab
 
 % Construct our lagged values.
-lag1 = [1; prices];
-lag2 = [1; 1; prices];
+%lag1 = [NaN; prices];
+%lag2 = [NaN; NaN; prices];
 
 % Truncate
-lag1 = lag1(2:end);
-lag2 = lag2(3:end);
+lag1 = prices(2:end - 2);
+lag2 = prices(3:end - 1);
+prices = prices(1:end - 3);
+
+len = length(prices);
 
 X = [ones(len, 1) lag1 lag2];
 
-%b = regress(times, X);
-b = regress((1:len)', X);
+b = regress(prices, X);
 
 B0 = b(1);
 B1 = b(2);
@@ -60,10 +62,12 @@ for i = 2:len
     matlab_ar2 = [matlab_ar2, matlab_contr];
 end
 
-plot(times, matlab_ar2);
+plot(times(2:end - 2), matlab_ar2);
 
 title("AR(2)");
 legend("Wool prices", "OLS in Excel, AR(2)", "OLS in Matlab, AR(2)");
-
+% We get slightly different values for Excel and Matlab, because the data
+% sets are slightly different. This is solvable, using different data sets
+% for the different approaches.
 
 hold off;
