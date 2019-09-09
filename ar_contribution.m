@@ -9,12 +9,7 @@
 %
 % y = 26.5310282 + 1.323312207 * y_(t - 1) -0.3475555766 * y_(t - 2)
     
-function [retval] = ar_contribution(data, index)
-    intercept = 26.5310282;
-
-    % Coefficients:
-    coeff1 = 1.323312207;
-    coeff2 = -0.3475555766;
+function [retval] = ar_contribution(data, index, B0, B1, B2)
 
     p1 = 0;
     if index - 1 > 0
@@ -26,5 +21,5 @@ function [retval] = ar_contribution(data, index)
         p2 = data(index - 2);
     end
     
-    retval = intercept + coeff1 * p1 + coeff2 * p2;
+    retval = B0 + B1 * p1 + B2 * p2;
 end
