@@ -5,32 +5,30 @@ import matplotlib.pyplot as plt
 df = pd.read_csv('dataset.csv')
 numarray = df.to_numpy()
 
-#print(numarray)
-
 closes = numarray[:, 4]
+
 plt.plot(closes)
 
-plt.ylabel('Adjusted close')
+plt.ylabel('Shares  value')
 plt.xlabel('Date')
 
-# giving a title to my graph
 plt.title('Simple predictions')
 
-avgs = []
+# Calculate return and plot a moving average of `days'-days.
+def calcAvgs(days):
+    avgs = []
 
-# Calculate and plot a moving average 30-days.
+    for i in range(0, len(closes)):
+        tail = max(0, i - days)
+        val = sum(closes[tail:i]) / days
+        avgs.append(val)
 
-for i in range(0, len(closes)):
-    tail = max(0, i - 30)
-    val = sum(closes[tail:i]) / 30
-    avgs.append(val)
+    return avgs
 
-plt.plot(avgs)
+plt.plot(calcAvgs(30))
+plt.plot(calcAvgs(270))
 
-# function to show the plot
+plt.legend(["Adjusted closes", "30-days MA", "9-months MA"])
+
 plt.show()
-
-# Display the DataFrame (table)
-#print(df)
-
 
