@@ -9,8 +9,8 @@ closes = numarray[:, 4]
 
 plt.plot(closes)
 
-plt.ylabel('Shares  value')
-plt.xlabel('Date')
+plt.ylabel('Shares value')
+plt.xlabel('Time')
 
 plt.title('Simple predictions')
 
