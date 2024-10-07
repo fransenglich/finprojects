@@ -26,9 +26,13 @@ def calcAvgs(days):
     return avgs
 
 plt.plot(calcAvgs(30))
-plt.plot(calcAvgs(270))
+plt.plot(calcAvgs(30 * 9))
+
+# Let's calculate an estimator with OLS
+y = range(len(closes))
+Bhat = y/closes
+print("Bhat: " + str(Bhat))
 
 plt.legend(["Adjusted closes", "30-days MA", "9-months MA"])
-
 plt.show()
 
