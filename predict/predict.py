@@ -34,5 +34,8 @@ Bhat = y/closes
 print("Bhat: " + str(Bhat))
 
 plt.legend(["Adjusted closes", "30-days MA", "9-months MA"])
-plt.show()
 
+plt.savefig("output_graph.png")
+plt.savefig("output_graph.svg")
+
+plt.show()

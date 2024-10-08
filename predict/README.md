@@ -10,3 +10,8 @@ Described here:
 See file dataset.csv.
 
 No blanks, and is considered clean.
+
+# Result
+
+![Output graph](output_graph.svg)
+
