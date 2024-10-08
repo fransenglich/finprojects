@@ -2,17 +2,17 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-df = pd.read_csv('dataset.csv')
+df = pd.read_csv("dataset.csv")
 numarray = df.to_numpy()
 
 closes = numarray[:, 4]
 
 plt.plot(closes)
 
-plt.ylabel('Shares value')
-plt.xlabel('Time')
+plt.ylabel("Share value")
+plt.xlabel("Time")
 
-plt.title('Simple predictions')
+plt.title("Simple predictions")
 
 # Calculate return and plot a moving average of `days'-days.
 def calcAvgs(days):
