@@ -48,7 +48,7 @@ def main():
     plt.ylabel("Share value")
     plt.xlabel("Time")
 
-    plt.title("Simple predictions")
+    plt.title("Predictions of NYSE ticker EW")
 
     # Calculate return and plot a moving average of `days'-days.
     def calcAvgs(days):
