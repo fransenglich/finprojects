@@ -1,9 +1,15 @@
 
-# Problem/task
+# Description
 
-Described here:
+This does some basic statistics of a stock ticker. Picked inspiration from this page:
 
 <https://www.getsuper.ai/post/6-financial-analytics-project-ideas-for-resume>
+
+The code was inspired by a LinkedIn-post by Riwaj Pokhrel, Ph.D.
+
+Using OLS is unsuitable, for its assumptions doesn't hold. For instance linearity and homoscedasticity are not fulfilled.
+
+Negative intercept. The form of the relationship is not linear.
 
 # Dataset
 
