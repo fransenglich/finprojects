@@ -66,12 +66,18 @@ def main():
 
     # Calculate an estimator with OLS
     # ----------------- OLS -----------------
-    myRange = range(len(closes))
-    X = []
 
-    for r in myRange:
-        X.append([r])
+    # There's perhaps a neater way to do this.
+    def toColumn(lst):
+        myRange = range(len(lst))
+        retval = []
 
+        for r in myRange:
+            retval.append([r])
+
+        return retval
+
+    X = toColumn(closes)
     y = closes
 
     print(f"closes: {closes}")

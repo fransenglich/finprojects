@@ -7,7 +7,7 @@ Described here:
 
 # Dataset
 
-See file dataset.csv.
+See file dataset.csv. Historical stock prices of Edwards Lifesciences Corporation (EW) within time span from 2000-03-26 to 2017-09-09.
 
 No blanks, and is considered clean.
 
