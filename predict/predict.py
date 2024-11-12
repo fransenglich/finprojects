@@ -46,7 +46,7 @@ def main():
     plt.plot(closes)
 
     plt.ylabel("Share value")
-    plt.xlabel("Time")
+    plt.xlabel("Observations (time)")
 
     plt.title("Predictions of NYSE ticker EW")
 
