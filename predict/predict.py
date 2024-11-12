@@ -8,8 +8,9 @@ class MyOLS:
         self.intercept = None
         self.coefficients = None
 
-    # X is an NxM array
-    # y is Nx1
+    # @par X is an NxM array
+    # @par y is Nx1
+    # Writes result to @par coefficients.
     def fit(self, X, y):
         ones = np.ones((len(X), 1))
         print(f"ones: {ones}")
@@ -19,10 +20,13 @@ class MyOLS:
         # (X^T * X)^-1 * X^T * y
         XT = X.T
         XTX = XT.dot(X)
+        print(f"XTX: {XTX}")
         XTX_inv = np.linalg.inv(XTX)
         XTy = XT.dot(y)
 
+        # XTX^-1 . XTy
         self.coefficients = XTX_inv.dot(XTy)
+        print(f"self.coefficients: {self.coefficients}")
 
 
     def predict(self, X):
@@ -37,8 +41,7 @@ def main():
     df = pd.read_csv("dataset.csv")
     numarray = df.to_numpy()
 
-    closes = numarray[:, 4]
-    #closes = closes[0:10] # TODO TEMP
+    closes = numarray[:, 4] # Column "Adj_Close"
 
     plt.plot(closes)
 
@@ -63,15 +66,17 @@ def main():
 
     # Calculate an estimator with OLS
     # ----------------- OLS -----------------
-    X = list(range(len(closes)))
+    myRange = range(len(closes))
+    X = []
+
+    for r in myRange:
+        X.append([r])
+
     y = closes
 
-    X = np.array([[1], [2], [3], [4], [5]])
-    y = np.array([1, 2, 3, 4, 5])
-
-
-    print(f"y: {y}")
+    print(f"closes: {closes}")
     print(f"X: {X}")
+    print(f"y: {y}")
 
     mols = MyOLS()
     mols.fit(X, y)
