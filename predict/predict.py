@@ -67,13 +67,10 @@ def main():
     # Calculate an estimator with OLS
     # ----------------- OLS -----------------
 
-    # There's perhaps a neater way to do this.
     def toColumn(lst):
         myRange = range(len(lst))
-        retval = []
 
-        for r in myRange:
-            retval.append([r])
+        retval = [[r] for r in myRange]
 
         return retval
 
