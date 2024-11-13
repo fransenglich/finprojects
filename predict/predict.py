@@ -60,7 +60,7 @@ def main():
     plt.ylabel("Share value")
     plt.xlabel("Observations (time)")
 
-    plt.title("Predictions of NYSE ticker EW")
+    plt.suptitle("Predictions of NYSE ticker EW")
 
     # Calculate return and plot a moving average of `days'-days.
     def calcAvgs(days):
@@ -76,7 +76,7 @@ def main():
     plt.plot(calcAvgs(30))
     plt.plot(calcAvgs(30 * 9))
 
-    # Calculate an estimator with OLS
+    # Calculate an estimator with OLS on prices
     # ----------------- OLS -----------------
 
     def toColumn(lst):
@@ -101,7 +101,6 @@ def main():
 
     plt.plot(ypred)
     # ----------------- OLS -----------------
-
 
     # Graph stuff
     plt.legend(["Adjusted closes", "30-days MA", "9-months MA", "OLS prediction"])
