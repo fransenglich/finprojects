@@ -43,6 +43,18 @@ def main():
 
     closes = numarray[:, 4] # Column "Adj_Close"
 
+    def closesToReturns(closes):
+        returns = []
+        previous = 0
+
+        for c in closes:
+            returns.append(c - previous)
+            previous = c
+
+        return returns
+
+    plt.subplot(122)
+
     plt.plot(closes)
 
     plt.ylabel("Share value")
@@ -96,6 +108,10 @@ def main():
 
     plt.savefig("output_graph.png")
     plt.savefig("output_graph.svg")
+
+    plt.subplot(121)
+    returns = closesToReturns(closes)
+    plt.plot(returns)
 
     plt.show()
 
