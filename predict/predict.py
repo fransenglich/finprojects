@@ -45,7 +45,7 @@ def main():
 
     def closesToReturns(closes):
         returns = []
-        previous = 0
+        previous = 0.0
 
         for c in closes:
             returns.append(c - previous)
@@ -79,6 +79,7 @@ def main():
     # Calculate an estimator with OLS on prices
     # ----------------- OLS -----------------
 
+    # Converts to a column of lists.
     def toColumn(lst):
         myRange = range(len(lst))
 
@@ -93,10 +94,10 @@ def main():
     print(f"X: {X}")
     print(f"y: {y}")
 
-    mols = MyOLS()
-    mols.fit(X, y)
+    mols_prices = MyOLS()
+    mols_prices.fit(X, y)
 
-    ypred = mols.predict(X)
+    ypred = mols_prices.predict(X)
     print(f"ypred: {ypred}")
 
     plt.plot(ypred)
@@ -105,13 +106,25 @@ def main():
     # Graph stuff
     plt.legend(["Adjusted closes", "30-days MA", "9-months MA", "OLS prediction"])
 
+    plt.subplot(121)
+
+    returns = closesToReturns(closes)
+    y = returns
+    plt.plot(returns)
+
+    X = toColumn(returns)
+
+    mols_returns = MyOLS()
+    mols_returns.fit(X, y)
+
+    prices_ypred = mols_returns.predict(X)
+
+    plt.plot(prices_ypred)
+
     plt.savefig("output_graph.png")
     plt.savefig("output_graph.svg")
 
-    plt.subplot(121)
-    returns = closesToReturns(closes)
-    plt.plot(returns)
-
+    print(f"coeffs: {mols_returns.coefficients}")
     plt.show()
 
 main()
