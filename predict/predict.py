@@ -44,18 +44,6 @@ def main():
 
     closes = numarray[:, 4] # Column "Adj_Close"
 
-    # https://poe.com/chat/3tfn7woo1ypl15zji5y
-    # https://www.quora.com/Why-is-it-wrong-to-run-regressions-on-prices-and-right-to-run-them-on-returns
-    def closesToReturns(closes):
-        returns = []
-        previous = 0.0
-
-        for c in closes:
-            returns.append(c - previous)
-            previous = c
-
-        return returns
-
     plt.subplot(122)
 
     plt.plot(closes)
@@ -80,7 +68,7 @@ def main():
     plt.plot(calcAvgs(30 * 9))
 
     # Calculate an estimator with OLS on prices
-    # ----------------- OLS -----------------
+    # ----------------- START price OLS -----------------
 
     # Converts to a column of lists.
     def toColumn(lst):
@@ -104,14 +92,28 @@ def main():
     print(f"ypred: {ypred}")
 
     plt.plot(ypred)
-    # ----------------- OLS -----------------
 
     # Graph stuff
     plt.legend(["Adjusted closes", "30-days MA", "9-months MA", "OLS prediction"])
 
+    # ----------------- END price OLS -----------------
+
+    # https://poe.com/chat/3tfn7woo1ypl15zji5y
+    # https://www.quora.com/Why-is-it-wrong-to-run-regressions-on-prices-and-right-to-run-them-on-returns
+    def closesToReturns(closes):
+        returns = []
+        previous = 0.0
+
+        for pt in closes:
+            returns.append((pt - previous) / previous if previous else (pt - previous) / pt)
+            previous = returns[-1]
+
+        return returns
+
     plt.subplot(121)
 
-    returns = closesToReturns(closes)
+    returns = df['Adj_Close'].pct_change()
+
     y = returns
     plt.plot(returns)
 
@@ -120,12 +122,14 @@ def main():
     mols_returns = MyOLS()
     mols_returns.fit(X, y)
 
-    prices_ypred = mols_returns.predict(X)
+    returns_ypred = mols_returns.predict(X)
 
-    plt.plot(prices_ypred)
+    plt.plot(returns_ypred)
 
     plt.ylabel("Returns")
     plt.xlabel("Observations (time)")
+
+    plt.legend(["Returns", "OLS fit"])
 
     plt.savefig("output_graph.png")
     plt.savefig("output_graph.svg")
