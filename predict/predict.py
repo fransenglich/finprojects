@@ -1,6 +1,7 @@
 
 import pandas as pd
 import numpy as np
+import statistics as stats
 import matplotlib.pyplot as plt
 
 class MyOLS:
@@ -43,6 +44,8 @@ def main():
 
     closes = numarray[:, 4] # Column "Adj_Close"
 
+    # https://poe.com/chat/3tfn7woo1ypl15zji5y
+    # https://www.quora.com/Why-is-it-wrong-to-run-regressions-on-prices-and-right-to-run-them-on-returns
     def closesToReturns(closes):
         returns = []
         previous = 0.0
@@ -57,7 +60,7 @@ def main():
 
     plt.plot(closes)
 
-    plt.ylabel("Share value")
+    plt.ylabel("Prices")
     plt.xlabel("Observations (time)")
 
     plt.suptitle("Predictions of NYSE ticker EW")
@@ -121,10 +124,14 @@ def main():
 
     plt.plot(prices_ypred)
 
+    plt.ylabel("Returns")
+    plt.xlabel("Observations (time)")
+
     plt.savefig("output_graph.png")
     plt.savefig("output_graph.svg")
 
     print(f"coeffs: {mols_returns.coefficients}")
+    print(f"mean: {stats.mean(returns)}")
     plt.show()
 
 main()
