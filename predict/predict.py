@@ -23,7 +23,9 @@ class MyOLS:
         XTX = XT.dot(X)
         print(f"XTX: {XTX}")
         XTX_inv = np.linalg.inv(XTX)
+        print(f"XTX_inv: {XTX_inv}")
         XTy = XT.dot(y)
+        print(f"XTy: {XTy}")
 
         # XTX^-1 . XTy
         self.coefficients = XTX_inv.dot(XTy)
