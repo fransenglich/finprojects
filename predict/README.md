@@ -11,7 +11,7 @@ Using OLS is unsuitable for this dataset, because its assumptions doesn't hold. 
 
 # Dataset
 
-See file dataset.csv. Historical stock prices of Edwards Lifesciences Corporation (EW) within time span from 2000-03-26 to 2017-09-09.
+See file dataset.csv. Historical stock prices of Edwards Lifesciences Corporation (EW) daily returns within time span from 2000-03-26 to 2017-09-09.
 
 The dataset has no blanks, and is considered clean.
 
