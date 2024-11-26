@@ -1,3 +1,4 @@
 *.swp
 output_graph.png
 output_graph.svg
+__pycache__
