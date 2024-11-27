@@ -12,7 +12,7 @@ def main():
     returns = df['Adj_Close'].pct_change()
     print(f"returns: {returns}")
 
-    # Get rid of nan, computing the EWMA fails with it.
+    # Get rid of nan, pct_change() produced it, computing the EWMA fails with it.
     returns[0] = 0
 
     plt.title("Prediction explorations")
@@ -25,7 +25,9 @@ def main():
     plt.plot(returns)
     plt.legend(["Returns"])
 
-    window_size = 2 # FIXME 1 leads to NaN for all data, don't know why.
+    # Smallest possible to get high resolution. SD is undefined for 1 value.
+    window_size = 2
+
     print(f"window_size: {window_size}")
     sd = returns.rolling(window_size).std() * (250 ** 0.5)
 
