@@ -35,7 +35,9 @@ def main():
 
     # ----------------------------------- EWMA
 
-    ewmas = ewma.compute_EWMAs(returns)
+    returns[0] = 0 # Get rid of nan, computing the EWMA fails with it.
+
+    ewmas = ewma.compute_EWMA(returns)
 
     plt.subplot(414)
     plt.plot(ewmas)
