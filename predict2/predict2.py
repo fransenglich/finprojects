@@ -12,6 +12,9 @@ def main():
     returns = df['Adj_Close'].pct_change()
     print(f"returns: {returns}")
 
+    # Get rid of nan, computing the EWMA fails with it.
+    returns[0] = 0
+
     plt.title("Prediction explorations")
 
     plt.subplot(411)
@@ -34,8 +37,6 @@ def main():
     plt.legend(["Standard deviation"])
 
     # ----------------------------------- EWMA
-
-    returns[0] = 0 # Get rid of nan, computing the EWMA fails with it.
 
     ewmas = ewma.compute_EWMA(returns)
 
