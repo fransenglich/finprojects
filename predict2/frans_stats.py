@@ -1,3 +1,4 @@
+import numpy as np
 
 # Returns a list of the EWMAs (variance) for the returns `returns'
 def compute_EWMA(returns, weight = 0.94, mean = 0):
@@ -35,10 +36,15 @@ def compute_SD(returns):
 
     return retval
 
-
+# Does an OLS regression.
+#
+# NOTE: Does not take into account the intercept.
 class OLS:
     def __init__(self):
+
+        # Not used
         self.intercept = None
+
         self.coefficients = None
 
     # @par X is an NxM array
