@@ -47,7 +47,7 @@ def main():
     plt.legend(["EWMA"])
 
     # ----------------------------------- Onwards
-    # Now we have our nice time series `returns' and variance in `ewmas'.
+    # Now we have our nice time series `returns' and volatility in `ewmas'.
 
     # ----------------------------------- Graph stuff
     plt.savefig("output_graph.png")
