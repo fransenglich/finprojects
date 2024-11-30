@@ -1,7 +1,7 @@
 
 import pandas as pd
 import numpy as np
-import ewma
+import frans_stats
 import matplotlib.pyplot as plt
 
 def main():
@@ -40,7 +40,7 @@ def main():
 
     # ----------------------------------- EWMA
 
-    ewmas = ewma.compute_EWMA(returns)
+    ewmas = frans_stats.compute_EWMA(returns)
 
     plt.subplot(414)
     plt.plot(ewmas)
