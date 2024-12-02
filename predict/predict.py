@@ -82,6 +82,7 @@ def main():
 
     X = toColumn(closes)
     y = closes
+    # FIXME X = y which makes no sense
 
     print(f"closes: {closes}")
     print(f"X: {X}")
@@ -120,6 +121,7 @@ def main():
     plt.plot(returns)
 
     X = toColumn(returns)
+    # FIXME X = y which makes no sense
 
     mols_returns = MyOLS()
     mols_returns.fit(X, y)
