@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import frans_stats
 import matplotlib.pyplot as plt
+import statsmodels.api as sm
 
 def main():
     df = pd.read_csv("dataset.csv")
@@ -48,6 +49,24 @@ def main():
 
     # ----------------------------------- Onwards
     # Now we have our nice time series `returns' and volatility in `ewmas'.
+
+    # Goal: list of B, predict next value (+1) with the B.
+    # Then we have an OLS prediction
+
+    y = returns
+
+    X = list(range(len(returns))) # Discrete time
+
+    model = sm.OLS(y, X)
+    res = model.fit()
+
+    B = res.params.iloc[0]
+
+    print(type(B))
+
+    print(dir(res))
+    print(res.summary())
+    print(f"params: {res.params}")
 
     # ----------------------------------- Graph stuff
     plt.savefig("output_graph.png")
