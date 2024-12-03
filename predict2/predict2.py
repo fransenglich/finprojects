@@ -88,7 +88,7 @@ def main():
     print(f"len(returns): {len(returns)}")
 
     # y_hat(t) = B * x(t)
-    y_hat = [B[i] * returns[i] for i in range(len(B))]
+    y_hat = [B[i] * returns[i + ols_window_size] for i in range(len(B))]
 
 
     # ----------------------------------- Graph stuff
