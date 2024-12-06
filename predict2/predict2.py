@@ -51,13 +51,13 @@ def main():
     # Now we have our nice time series `returns' and volatility in `ewmas'.
 
     # Our starting values are 0, skip them.
-    #returns = returns.to_list()[1:]
-    #ewmas = ewmas[1:]
+    returns = returns.to_list()[1:]
+    ewmas = ewmas[1:]
 
     # We normalize: y(t) := r(t) / volatility(t)
     print(f"len: {len(returns)}, {len(ewmas)}")
     #print(f"data: {(ewmas)}")
-    #returns = [returns[i]/ewmas[i] for i in range(len(returns))]
+    returns = [returns[i]/ewmas[i] for i in range(len(returns))]
 
 
     # ----------------------------------- OLS
@@ -90,7 +90,8 @@ def main():
         res = model.fit()
 
         # We only have one independent, so one coef.
-        B.append(res.params.iloc[0])
+        #print(res.summary())
+        B.append(res.params[0])
 
         #print(f"len(y): {len(y)}")
         #print(f"len(X): {len(X)}")
