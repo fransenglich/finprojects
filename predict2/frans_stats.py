@@ -2,8 +2,8 @@ import numpy as np
 
 # Returns a list of the EWMAs (variance) for the returns `returns'
 def compute_EWMA(returns, weight = 0.94, mean = 0):
-    print(f"type returns: {type(returns)}")
-    print(f"returns: {returns}")
+    #print(f"type returns: {type(returns)}")
+    #print(f"returns: {returns}")
 
     retval = []
     previous_value = 0
@@ -13,7 +13,7 @@ def compute_EWMA(returns, weight = 0.94, mean = 0):
         previous_value = new_value
         retval.append(new_value)
 
-    print(f"retval: {retval}")
+    #print(f"retval: {retval}")
     return retval
 
 # Question is how to define the window over `returns', currently it is not
