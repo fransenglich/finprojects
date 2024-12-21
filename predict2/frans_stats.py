@@ -1,4 +1,17 @@
+import inspect
 import numpy as np
+
+# A debugging function that prints `variables' with name and type.
+def fprint(variables) -> None:
+    def retrieve_name(var):
+        callers_local_vars = inspect.currentframe().f_back.f_back.f_locals.items()
+        return [var_name for var_name, var_val in callers_local_vars if var_val is var]
+
+    tuples = variables if type(variables) is tuple else (variables,)
+
+    for var in tuples:
+        print(f"{retrieve_name(var)}: {var}, type: {type(var)}")
+
 
 # Returns a list of the EWMAs (variance) for the returns `returns'
 def compute_EWMA(returns, weight = 0.94, mean = 0):
@@ -15,6 +28,7 @@ def compute_EWMA(returns, weight = 0.94, mean = 0):
 
     #print(f"retval: {retval}")
     return retval
+
 
 # Question is how to define the window over `returns', currently it is not
 # rolling, but expanding.

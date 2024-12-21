@@ -2,6 +2,7 @@
 import pandas as pd
 import numpy as np
 import frans_stats
+from frans_stats import fprint
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
 
@@ -29,11 +30,11 @@ def main():
     # Smallest possible to get high resolution. SD is undefined for 1 value.
     sd_window_size = 2
 
-    print(f"sd_window_size: {sd_window_size}")
+    fprint(sd_window_size)
+    fprint(sd_window_size)
     sd = returns.rolling(sd_window_size).std() * (250 ** 0.5)
 
-    #print(f"sd: {sd}")
-    print(f"type sd: {type(sd)}")
+    fprint(sd)
 
     plt.subplot(413)
     plt.plot(sd)
@@ -56,7 +57,7 @@ def main():
 
     # We normalize: y(t) := r(t) / volatility(t)
     print(f"len: {len(returns)}, {len(ewmas)}")
-    #print(f"data: {(ewmas)}")
+    print(ewmas)
     returns = [returns[i]/ewmas[i] for i in range(len(returns))]
 
 
