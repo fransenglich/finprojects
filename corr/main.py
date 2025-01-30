@@ -26,8 +26,9 @@ def compute_beta_IBM5Y():
 
     market: pd.DataFrame = pd.read_csv("SPY5Y.csv", parse_dates = ['date'])
     market = market[market["date"] >= start_date]
-    print(market)
+    #print(market)
     market = market[market["date"].dt.day == start_date.day]
+    print(market.to_string())
 
     asset = pd.read_csv("IBM5Y.csv", parse_dates = ['date'])
     asset = asset[asset["date"] >= start_date]
@@ -35,10 +36,11 @@ def compute_beta_IBM5Y():
 
     combined = pd.concat([market["4. close"], asset["4. close"]], axis = 1)
 
-    print(combined)
+    #print(combined)
     covar = combined.cov().iloc[0].iloc[1]
     var_m = market["4. close"].var()
 
+    # B = cov(r_i, r_m)/var(r_m)
     beta = covar / var_m
 
     print(start_date, start_date.day, covar, var_m, beta)
