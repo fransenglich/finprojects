@@ -1,8 +1,8 @@
 import pandas as pd
 from datetime import datetime
 from dateutil.relativedelta import relativedelta   
- 
 import numpy as np
+
 
 def compute_beta_IBM():
     market: pd.DataFrame = pd.read_csv("SPY.csv")
