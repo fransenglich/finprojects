@@ -1,5 +1,5 @@
 import pandas as pd
-from datetime import datetime, date
+from datetime import datetime
 from dateutil.relativedelta import relativedelta   
  
 import numpy as np
@@ -23,7 +23,7 @@ def compute_beta_IBM():
 # TODO actually compute monthly
 def compute_beta_IBM5Y():
     start_date  = (datetime.today() - relativedelta(months = 12 * 5))
-    
+
     market: pd.DataFrame = pd.read_csv("SPY5Y.csv", parse_dates = ['date'])
     market = market[market["date"] >= start_date]
 
