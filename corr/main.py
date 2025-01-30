@@ -20,17 +20,17 @@ def compute_beta_IBM():
     # so this is reasonable result.
 
 
-# TODO actually compute monthly
-def compute_beta_IBM5Y():
+# TODO Correctly do monthly.
+def compute_beta_IBM():
     start_date  = (datetime.today() - relativedelta(months = 12 * 5))
 
-    market: pd.DataFrame = pd.read_csv("SPY5Y.csv", parse_dates = ['date'])
+    market: pd.DataFrame = pd.read_csv("SPY.csv", parse_dates = ['date'])
     market = market[market["date"] >= start_date]
-    #print(market)
+    print(market)
     market = market[market["date"].dt.day == start_date.day]
-    #print(market.to_string())
+    print(market.to_string())
 
-    asset = pd.read_csv("IBM5Y.csv", parse_dates = ['date'])
+    asset = pd.read_csv("IBM.csv", parse_dates = ['date'])
     asset = asset[asset["date"] >= start_date]
     asset = asset[asset["date"].dt.day == start_date.day]
 
@@ -50,7 +50,7 @@ def compute_beta_IBM5Y():
 
 
 def main():
-    compute_beta_IBM5Y()
+    compute_beta_IBM()
 
 
 main()
