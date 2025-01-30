@@ -29,24 +29,30 @@ def compute_beta_IBM5Y():
     print(market)
     market = market[market["date"].dt.day == start_date.day]
     print(market.to_string())
+    pct_m = market["4. close"].pct_change()
 
     asset = pd.read_csv("IBM.csv", parse_dates = ['date'])
     asset = asset[asset["date"] >= start_date]
     asset = asset[asset["date"].dt.day == start_date.day]
+    pct_a = asset["4. close"].pct_change()
 
-    combined = pd.concat([market["4. close"], asset["4. close"]], axis = 1)
+    combined = pd.concat([pct_m, pct_a], axis = 1)
 
     #print(combined)
     covar = combined.cov().iloc[0].iloc[1]
-    var_m = market["4. close"].var()
+    var_m = pct_m.var()
 
     # B = cov(r_i, r_m)/var(r_m)
     beta = covar / var_m
 
     print(start_date, start_date.day, covar, var_m, beta)
-    # Yields beta = 0.3150. According to Yahoo Finance 5Y monthly is 0.71.
+    # Yields beta = 0.4173. According to Yahoo Finance 5Y monthly is 0.71.
     #
+    # According to this source:
     # https://quant.stackexchange.com/questions/15797/how-does-yahoo-finance-calculate-beta
+    #
+    # - They are using adjusted (which is premium in Alpha Vantage)
+    # - They use S&P 500, I use SPY as proxy
 
 
 def main():

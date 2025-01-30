@@ -52,12 +52,12 @@ def download_tickers():
     data: pd.DataFrame = None
 
     for t in ['IBM', 'AAL', 'MMSI', 'NVDA', 'TIGO', 'SPY']:
-        data, meta_data = ts.get_daily(t, outputsize='full')
+        data, meta_data = ts.get_daily_adjusted(t, outputsize='full')
 
         #print(type(data))
         #print(data)
 
-        data.to_csv(t + ".csv")
+        data.to_csv(t + "_adj.csv")
 
     # S&P 500 proxy, Fetch SPY, https://www.investopedia.com/markets/quote?tvwidgetsymbol=SPY
 
