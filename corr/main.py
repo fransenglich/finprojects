@@ -28,7 +28,7 @@ def compute_beta_IBM5Y():
     market = market[market["date"] >= start_date]
     #print(market)
     market = market[market["date"].dt.day == start_date.day]
-    print(market.to_string())
+    #print(market.to_string())
 
     asset = pd.read_csv("IBM5Y.csv", parse_dates = ['date'])
     asset = asset[asset["date"] >= start_date]

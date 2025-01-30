@@ -50,10 +50,9 @@ def download_tickers():
     ts = TimeSeries(api_key, output_format = 'pandas')
 
     data: pd.DataFrame = None
-    #data, meta_data = ts.get_daily(['IBM', 'AAL', 'MMSI', 'NVDA', 'TIGO'])
 
-    for t in ['SPY']:
-        data, meta_data = ts.get_daily(t)
+    for t in ['IBM', 'AAL', 'MMSI', 'NVDA', 'TIGO', 'SPY']:
+        data, meta_data = ts.get_daily(t, outputsize='full')
 
         #print(type(data))
         #print(data)
@@ -64,7 +63,7 @@ def download_tickers():
 
 
 def main():
-    download_IBM5Y()
+    download_tickers()
 
 
 main()
