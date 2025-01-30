@@ -21,7 +21,7 @@ def compute_beta_IBM():
 
 
 # TODO Correctly do monthly.
-def compute_beta_IBM():
+def compute_beta_IBM5Y():
     start_date  = (datetime.today() - relativedelta(months = 12 * 5))
 
     market: pd.DataFrame = pd.read_csv("SPY.csv", parse_dates = ['date'])
@@ -44,13 +44,13 @@ def compute_beta_IBM():
     beta = covar / var_m
 
     print(start_date, start_date.day, covar, var_m, beta)
-    # Yields beta = 0.3101. According to Yahoo Finance 5Y monthly is 0.71.
+    # Yields beta = 0.3150. According to Yahoo Finance 5Y monthly is 0.71.
     #
     # https://quant.stackexchange.com/questions/15797/how-does-yahoo-finance-calculate-beta
 
 
 def main():
-    compute_beta_IBM()
+    compute_beta_IBM5Y()
 
 
 main()
