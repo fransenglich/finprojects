@@ -70,6 +70,7 @@ alpha0 = 0.5;
 beta0  = 0.5;
 theta0 = [alpha0; beta0];
 
+% TODO this is wrong. It needs to run on the returns, not closes.
 fun = @(x)-loglf(x, prices);
 thetaHat = fmincon(fun, theta0, [], [], [], [], [0;0], [1;1]);
 
