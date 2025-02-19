@@ -6,3 +6,8 @@ explainer.out
 explainer.pdf
 explainer.run.xml
 .DS_Store
+explainer.bbl
+explainer.blg
+explainer.fls
+explainer.fdb_latexmk
+explainer.synctex.gz
