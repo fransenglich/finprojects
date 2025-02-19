@@ -111,7 +111,7 @@ We run the regression in previous equation and get $\beta$, a constant. This can
 Now we have 2 known components, $x_t$ and $\beta$, which we use and run in a regression to get $\hat{y}$:
 
 \begin{equation*}
-    \hat{y}_t = \beta*x_t
+    \hat{y}_t = \beta*x_t   
 \end{equation*}
 
 Now our process has produced another time series, $\hat{y}$, which is our prediction of our normalised returns, $y_t$.
@@ -122,9 +122,11 @@ The question is, is it any good? We can first look at (MATLAB code):
 cumsum($\hat{y}$ * $y_t$)
 \end{lstlisting}
 
-It can be plotted with $y_t$ for comparison.
+It can be plotted with $y_t$ for comparison, since they are similar in nature.
 
 The prediction can then further be analysed to show whether it's profitable, by adjusting for the trading cost.
+
+Another perspective is more traditional science, and look at the regression we ran to produce $\hat{y}$. What is its statistical power? What's its $R^2$ value? And so forth.
 
 \end{document}
 
