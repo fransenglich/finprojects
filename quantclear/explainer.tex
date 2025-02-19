@@ -1,0 +1,130 @@
+% TODO:
+% * Plot the tangency portfolio
+% * Plot the Capital Allocation Line (CAL)
+% * Document that mean/variance is historical and how much.
+% * Make it solid. Understand and check it.
+% * Incorporate Oscar's reply.
+% * Discuss that our time series aren't long.
+
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{csquotes}
+
+\usepackage[
+    backend=biber,
+    style=authoryear-icomp,
+    natbib=true,
+    url=false,
+    doi=true,
+    eprint=false
+]{biblatex}
+
+\addbibresource{references.bib}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage[english]{babel}
+\usepackage[bookmarks=true]{hyperref}
+\usepackage{color}
+\usepackage{listings}
+
+\usepackage[
+    type={CC},
+    modifier={by-nc-sa},
+    version={3.0},
+]{doclicense}
+
+\usepackage{xcolor}
+% New colors defined below.
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+%  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  keepspaces=true,
+  numbers=left,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+
+\def\documenttitle{Quant clearly clarified}
+
+\title{\documenttitle}
+\date{\today}
+\author{Frans Englich \\
+        \href{mailto:fenglich@fastmail.fm}{fenglich@fastmail.fm}}
+
+\hypersetup{
+    pdfsubject = {\documenttitle},
+    pdftitle = {\documenttitle}
+}
+
+\begin{document}
+
+\maketitle
+
+This paper is a general, schematic overview of the quant trading process. Source is a mail from Johannes.
+
+First we have our time series of prices of an asset, $p_t$, that we transform into a time series of returns (percentages):
+
+\begin{equation*}
+    r_t = \frac{p_{t + dt}}{p_{t - 1}}
+\end{equation*}
+
+Next, we volatility normalize it, "flatten" it:
+
+\begin{equation*}
+    y_t = \frac{r_t}{Vol_t}
+\end{equation*}
+
+The volatility can be computed anyhow as per taste; EWMA, or more fancy like GARCH, etc.
+
+Now we model it linearly:
+
+\begin{equation*}
+    y_t = \beta*x_t + \epsilon
+\end{equation*}
+
+$y_t$ is a time series of returns (percentages) that we normalised before. $x_t$, however can be any kind of data. The choice of $x_t$ is our clever competitive advantage that makes our trading.
+
+We run the regression in previous equation and get $\beta$, a constant. This can be a bit confusing. When running rolling we get several betas, one for each regression, but it's not "a time series of betas."
+
+Now we have 2 known components, $x_t$ and $\beta$, which we use and run in a regression to get $\hat{y}$:
+
+\begin{equation*}
+    \hat{y}_t = \beta*x_t
+\end{equation*}
+
+Now our process has produced another time series, $\hat{y}$, which is our prediction of our normalised returns, $y_t$.
+
+The question is, is it any good? We can first look at (MATLAB code):
+
+\begin{lstlisting}[language=Matlab, mathescape=true]
+cumsum($\hat{y}$ * $y_t$)
+\end{lstlisting}
+
+It can be plotted with $y_t$ for comparison.
+
+The prediction can then further be analysed to show whether it's profitable, by adjusting for the trading cost.
+
+\end{document}
+
