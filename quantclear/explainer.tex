@@ -70,7 +70,7 @@
 
 \title{\documenttitle}
 \date{\today}
-\author{Frans Englich\texorpdfstring \\
+\author{Frans Englich \\
         \href{mailto:fenglich@fastmail.fm}{fenglich@fastmail.fm}}
 
 \hypersetup{
@@ -93,7 +93,7 @@ First we have our time series of prices of an asset, $p_t$, that we transform in
 Next, we volatility normalize it, "flatten" it:
 
 \begin{equation*}
-    y_t = \frac{r_t}{\sigma_t}
+    y_t = \frac{r_t}{Vol_t}
 \end{equation*}
 
 The volatility can be computed anyhow as per taste; EWMA, or more fancy like GARCH, etc.
@@ -122,10 +122,11 @@ The question is, is it any good? We can first look at (MATLAB code):
 cumsum($\hat{y}$ * $y_t$)
 \end{lstlisting}
 
-It can be plotted with $y_t$ for comparison, they are similar in nature.
+It can be plotted with $y_t$ for comparison, since they are similar in nature.
 
 The prediction can then further be analysed to show whether it's profitable, by adjusting for the trading cost.
 
 Another perspective is more traditional science, and look at the regression we ran to produce $\hat{y}$. What is its statistical power? What's its $R^2$ value? And so forth.
 
 \end{document}
+
