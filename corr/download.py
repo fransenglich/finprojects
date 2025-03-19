@@ -39,31 +39,33 @@ def get_listing_status(api_key: str):
     f.close()
 
 
-def download_IBM5Y():
+def download_ticker(ticker: str):
     ts = TimeSeries(api_key, output_format = 'pandas')
 
-    data, meta_data = ts.get_monthly('IBM')
+    data, meta_data = ts.get_monthly(ticker)
     data.to_csv("IBM5Y.csv")
 
 
-def download_tickers():
+def download_tickers(tickers):
     ts = TimeSeries(api_key, output_format = 'pandas')
 
     data: pd.DataFrame = None
 
-    for t in ['IBM', 'AAL', 'MMSI', 'NVDA', 'TIGO', 'SPY']:
-        data, meta_data = ts.get_daily_adjusted(t, outputsize='full')
+    for t in tickers:
+        data, meta_data = ts.get_daily(t, outputsize='full')
 
         #print(type(data))
         #print(data)
 
-        data.to_csv(t + "_adj.csv")
+        data.to_csv(t + ".csv")
 
     # S&P 500 proxy, Fetch SPY, https://www.investopedia.com/markets/quote?tvwidgetsymbol=SPY
 
 
 def main():
-    download_tickers()
+    #download_ticker('XLB')
+    #download_tickers(['IBM', 'AAL', 'MMSI', 'NVDA', 'TIGO', 'SPY'])
 
+    download_tickers(['XLB', 'XLC', 'XLE', 'XLF', 'XLI', 'XLK', 'XLP', 'XLU', 'XLV', 'XLY'])
 
 main()
